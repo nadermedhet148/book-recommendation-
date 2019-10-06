@@ -40,11 +40,12 @@ def getReltedBooks(book_name):
                 all_readers_books[book['book_id']
                                   ]['count'] = all_readers_books[book['book_id']]['count'] + 1
             else:
+                book_data = books.loc[books['book_id'] == book['book_id']]
                 all_readers_books[book['book_id']] = {
                     "count": 1,
-                    "book_id": book['book_id'],
-                    "average_rating": reviews_per_book[book['book_id']],
-                    "book": books.loc[books['book_id'] == book['book_id']]
+                    "book_id": int(book['book_id']),
+                    "average_rating": int(reviews_per_book[book['book_id']]),
+                    "book_name": str(book_data['original_title'])
                 }
     # sort books to get high priority first
     sorted_books = sorted(all_readers_books.values(),
@@ -53,7 +54,5 @@ def getReltedBooks(book_name):
     return sorted_books
 
 
-print(getReltedBooks('The Hunger Games')[0: 100])
-
-
 # %%
+# create api with flask
